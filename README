@@ -1,0 +1,37 @@
+ParentResources
+===============
+
+If you has polymorphic models, you already needed of controllers to them. The problem was do this DRY. With this plugin, following idea from Val Aleksenko, you will let your controller more simple to this.
+
+
+Example
+=======
+
+Your controller should be like this:
+
+class CommentsController < ApplicationController
+  
+  parent_resources :article, :document
+  
+  def new
+    @parent = parent_object
+    @comment = Comment.new
+  end
+
+  def create
+
+    @parent = parent_object
+    @comment = @parent.comments.build(params[:comment])
+
+    if @comment.valid? and @comment.save
+      redirect_to send("#{ parent_type }_url", @parent)
+    else
+      render :action => 'new'
+    end
+
+  end
+    
+end
+
+
+Copyright (c) 2008 Davis Zanetti Cabral, released under the MIT license
