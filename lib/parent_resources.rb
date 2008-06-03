@@ -22,10 +22,9 @@ module ActionController
       end
 
     module ClassMethods
-
+      attr_reader :parents
+        
       protected
-        attr_reader :parents
-  
         def parent_resources(*parents)
           @parents = parents
         end
