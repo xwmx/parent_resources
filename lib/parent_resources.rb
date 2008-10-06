@@ -7,7 +7,7 @@ module ActionController
     
     protected
       def parent_id(parent)
-        @parent_id ||= request.path_parameters["#{ parent }_id"]
+        request.path_parameters["#{ parent }_id"]
       end
         
       def parent_type
@@ -15,11 +15,11 @@ module ActionController
       end
         
       def parent_class
-        @parent_class ||= parent_type && parent_type.to_s.classify.constantize
+        parent_type && parent_type.to_s.classify.constantize
       end
         
       def parent_object
-        @parent_object ||= if parent_class
+        if parent_class
           if parent_class.respond_to?(:from_param)
             parent_class.from_param(parent_id(parent_type))
           else
